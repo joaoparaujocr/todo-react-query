@@ -4,7 +4,6 @@ import { errorMiddleware } from "./middlewares/error.middleware";
 import { Request, Response } from "express";
 
 const app = express();
-const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 
@@ -18,6 +17,4 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+export default app;

@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/app.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "dev": "ts-node-dev src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "typeorm migration:generate",
+    "migration:run": "typeorm migration:run -d src/data-source.ts"
   },
   "keywords": [],
   "author": "",
