@@ -4,6 +4,7 @@ import { taskCreateValidate } from "../validations/task";
 import { authenticatedUserMiddleware } from "../middlewares/authenticatedUser.middleware";
 import {
   createTaskController,
+  deleteTaskController,
   findAllTasksController,
   updateTaskController,
 } from "../controllers/task";
@@ -16,12 +17,13 @@ tasksRoutes.post(
   authenticatedUserMiddleware,
   createTaskController
 );
-tasksRoutes.get("", authenticatedUserMiddleware, findAllTasksController);
 tasksRoutes.patch(
   "/:id",
   authenticatedUserMiddleware,
   validationMiddleware(taskCreateValidate.partial()),
   updateTaskController
 );
+tasksRoutes.get("", authenticatedUserMiddleware, findAllTasksController);
+tasksRoutes.delete("/:id", authenticatedUserMiddleware, deleteTaskController);
 
 export default tasksRoutes;
