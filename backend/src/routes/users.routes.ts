@@ -15,7 +15,7 @@ usersRoutes.post(
 );
 usersRoutes.post(
   "/login",
-  validationMiddleware(userLoginValidate.optional()),
+  validationMiddleware(userLoginValidate.partial()),
   authenticateUserController
 );
 

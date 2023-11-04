@@ -5,6 +5,7 @@ import { authenticatedUserMiddleware } from "../middlewares/authenticatedUser.mi
 import {
   createTaskController,
   findAllTasksController,
+  updateTaskController,
 } from "../controllers/task";
 
 const tasksRoutes = Router();
@@ -16,5 +17,11 @@ tasksRoutes.post(
   createTaskController
 );
 tasksRoutes.get("", authenticatedUserMiddleware, findAllTasksController);
+tasksRoutes.patch(
+  "/:id",
+  authenticatedUserMiddleware,
+  validationMiddleware(taskCreateValidate.partial()),
+  updateTaskController
+);
 
 export default tasksRoutes;
