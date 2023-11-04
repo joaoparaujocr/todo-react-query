@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { ZodObject, ZodRawShape } from "zod";
+import { ZodOptional, AnyZodObject } from "zod";
 
 export const validationMiddleware =
-  (validate: ZodObject<any>) =>
+  (validate: AnyZodObject | ZodOptional<any>) =>
   (req: Request, _res: Response, next: NextFunction) => {
-    const parse = validate.required().parse(req.body);
+    const parse = validate.parse(req.body);
 
     req.body = parse;
 

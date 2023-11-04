@@ -17,3 +17,7 @@ export const userWithoutPasswordValidate = userValidate.omit({
 export const userCreateValidate = userValidate.omit({
   id: true,
 });
+
+export const userLoginValidate = userCreateValidate.extend({
+  password: z.string(),
+});
