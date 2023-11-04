@@ -2,6 +2,7 @@ import AppDataSource from "../../data-source";
 import { TaskCreate } from "../../dto/task";
 import { UserWithoutPassword } from "../../dto/user";
 import Task from "../../entities/Task.entity";
+import { taskWithoutUserValidate } from "../../validations/task";
 
 export const createTaskService = async (
   taskContent: TaskCreate,
@@ -16,5 +17,5 @@ export const createTaskService = async (
     },
   });
 
-  return taskCreate;
+  return taskWithoutUserValidate.parse(taskCreate);
 };

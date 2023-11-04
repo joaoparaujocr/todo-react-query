@@ -14,12 +14,11 @@ export const authenticatedUserMiddleware = async (
 ) => {
   const userRepository = AppDataSource.getRepository(User);
   const authorization = req.headers.authorization;
+  const token = authorization && authorization.split(" ")[1]
 
-  if (!authorization) {
+  if (!token) {
     throw new AppError(401, "Without authorization");
   }
-
-  const token = authorization.split(" ")[1];
 
   const payload: UserWithoutPassword = jwt.verify(
     token,

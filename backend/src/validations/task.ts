@@ -10,3 +10,5 @@ export const taskValidate = z.object({
 });
 
 export const taskCreateValidate = taskValidate.pick({ content: true });
+
+export const taskWithoutUserValidate = taskValidate.omit({ user: true });
