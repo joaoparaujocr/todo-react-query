@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migration:generate": "typeorm migration:generate",
-    "migration:run": "typeorm migration:run -d src/data-source.ts"
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts"
   },
   "keywords": [],
   "author": "",
