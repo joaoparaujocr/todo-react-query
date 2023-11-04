@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { authenticateUserService } from "../../services/user/authenticateUser.service";
+import { authenticateUserService } from "../../services/user";
 
 export const authenticateUserController = async (
   req: Request,

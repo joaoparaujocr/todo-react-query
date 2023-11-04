@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { validationMiddleware } from "../middlewares/validation.middleware";
 import { userCreateValidate, userLoginValidate } from "../validations/user";
-import { createUserController } from "../controllers";
-import { authenticateUserController } from "../controllers/user/authenticateUser.controller";
+import {
+  createUserController,
+  authenticateUserController,
+} from "../controllers/user";
 
 const usersRoutes = Router();
 
