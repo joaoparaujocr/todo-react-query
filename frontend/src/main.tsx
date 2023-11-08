@@ -10,9 +10,9 @@ import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider>
-      <ThemeProvider theme={customTheme}>
-        <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+        <ThemeProvider theme={customTheme}>
           <Toaster
             position="top-center"
             reverseOrder={false}
@@ -23,8 +23,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             }}
           />
           <AllRoutes />
-        </BrowserRouter>
-      </ThemeProvider>
-    </AuthProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
