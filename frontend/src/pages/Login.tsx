@@ -17,7 +17,11 @@ import { InputsRegisterAndLogin } from "./Register";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import { AxiosResponse } from "axios";
+import accessToken from "../utils/accessToken";
+
+type ResponseLogin = {
+  token: string;
+};
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,16 +34,15 @@ const Login = () => {
     toast.remove();
 
     try {
-      const registerUser = api.post("/users/login", data);
-      const { data: dataResponse } = await toast.promise<AxiosResponse>(
-        registerUser,
-        {
-          loading: "Realizando o Login",
-          success: "Usuario Logado com sucesso",
-          error: "Senha ou e-mail incorretos",
-        }
-      );
-      console.log(dataResponse);
+      const registerUser = api.post<ResponseLogin>("/users/login", data);
+      const {
+        data: { token },
+      } = await toast.promise(registerUser, {
+        loading: "Realizando o Login",
+        success: "Usuario Logado com sucesso",
+        error: "Senha ou e-mail incorretos",
+      });
+      accessToken.setToken(token);
       navigate("/");
     } catch (error) {
       console.error(error);
