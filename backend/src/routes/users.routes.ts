@@ -5,6 +5,7 @@ import {
   createUserController,
   authenticateUserController,
 } from "../controllers/user";
+import { authenticatedUserMiddleware } from "../middlewares/authenticatedUser.middleware";
 
 const usersRoutes = Router();
 
@@ -18,5 +19,6 @@ usersRoutes.post(
   validationMiddleware(userLoginValidate.partial()),
   authenticateUserController
 );
+usersRoutes.post("/token", authenticatedUserMiddleware(true));
 
 export default usersRoutes;

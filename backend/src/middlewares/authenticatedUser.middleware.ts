@@ -7,34 +7,38 @@ import "dotenv/config";
 import { UserWithoutPassword } from "../dto/user";
 import { userWithoutPasswordValidate } from "../validations/user";
 
-export const authenticatedUserMiddleware = async (
-  req: Request,
-  _res: Response,
-  next: NextFunction
-) => {
-  const userRepository = AppDataSource.getRepository(User);
-  const authorization = req.headers.authorization;
-  const token = authorization && authorization.split(" ")[1]
+export const authenticatedUserMiddleware =
+  (returnResponse?: boolean) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userRepository = AppDataSource.getRepository(User);
+    const authorization = req.headers.authorization;
+    const token = authorization && authorization.split(" ")[1];
 
-  if (!token) {
-    throw new AppError(401, "Without authorization");
-  }
+    if (!token) {
+      throw new AppError(401, "Without authorization");
+    }
 
-  const payload: UserWithoutPassword = jwt.verify(
-    token,
-    process.env.SECRET_KEY!
-  ) as UserWithoutPassword;
+    const payload: UserWithoutPassword = jwt.verify(
+      token,
+      process.env.SECRET_KEY!
+    ) as UserWithoutPassword;
 
-  const findUser = await userRepository.findOneBy({
-    id: payload.id,
-    email: payload.email,
-  });
+    const findUser = await userRepository.findOneBy({
+      id: payload.id,
+      email: payload.email,
+    });
 
-  if (!findUser) {
-    throw new AppError(404, "Token user not found");
-  }
+    if (!findUser) {
+      throw new AppError(404, "Token user not found");
+    }
 
-  req.user = userWithoutPasswordValidate.parse(findUser);
+    const user = userWithoutPasswordValidate.parse(findUser);
 
-  return next();
-};
+    if (returnResponse) {
+      return res.json(user);
+    }
+
+    req.user = user;
+
+    return next();
+  };
