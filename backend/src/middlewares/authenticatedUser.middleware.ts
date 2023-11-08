@@ -8,7 +8,7 @@ import { UserWithoutPassword } from "../dto/user";
 import { userWithoutPasswordValidate } from "../validations/user";
 
 export const authenticatedUserMiddleware =
-  (returnResponse?: boolean) =>
+  (returnResponse: boolean = false) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const userRepository = AppDataSource.getRepository(User);
     const authorization = req.headers.authorization;

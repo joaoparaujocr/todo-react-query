@@ -23,7 +23,7 @@ tasksRoutes.patch(
   validationMiddleware(taskCreateValidate.partial()),
   updateTaskController
 );
-tasksRoutes.get("", authenticatedUserMiddleware, findAllTasksController);
+tasksRoutes.get("", authenticatedUserMiddleware(), findAllTasksController);
 tasksRoutes.delete("/:id", authenticatedUserMiddleware, deleteTaskController);
 
 export default tasksRoutes;
