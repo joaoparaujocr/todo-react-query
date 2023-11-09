@@ -20,6 +20,9 @@ dependencies:
   axios:
     specifier: ^1.6.0
     version: 1.6.0
+  change-case:
+    specifier: ^5.1.2
+    version: 5.1.2
   localforage:
     specifier: ^1.10.0
     version: 1.10.0
@@ -1288,6 +1291,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /change-case@5.1.2:
+    resolution: {integrity: sha512-CAtbGEDulyjzs05RXy3uKcwqeztz/dMEuAc1Xu9NQBsbrhuGMneL0u9Dj5SoutLKBFYun8txxYIwhjtLNfUmCA==}
+    dev: false
 
   /clsx@2.0.0:
     resolution: {integrity: sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==}
