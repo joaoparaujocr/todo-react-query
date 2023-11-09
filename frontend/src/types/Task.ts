@@ -3,4 +3,5 @@ export type Task = {
   content: string;
   cratedAt: Date;
   updatedAt: Date;
+  checked: boolean;
 };

@@ -18,15 +18,11 @@ const ListTasks = ({ tasks }: ListTaskProps) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        width: "100%",
-        maxWidth: "600px",
-        margin: "0 auto",
-        padding: "20px 10px",
         gap: "20px",
       }}
     >
       {tasks.map((task) => (
-        <ItemTask {...task} />
+        <ItemTask key={task.id} {...task} />
       ))}
     </List>
   );

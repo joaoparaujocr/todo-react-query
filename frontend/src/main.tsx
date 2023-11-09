@@ -7,23 +7,26 @@ import { ThemeProvider } from "@mui/material";
 import customTheme from "./theme";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
+import { DashboardProvider } from "./context/DashboardContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ThemeProvider theme={customTheme}>
-          <Toaster
-            position="top-center"
-            reverseOrder={false}
-            gutter={8}
-            containerStyle={{}}
-            toastOptions={{
-              duration: 5000,
-            }}
-          />
-          <AllRoutes />
-        </ThemeProvider>
+        <DashboardProvider>
+          <ThemeProvider theme={customTheme}>
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+              gutter={8}
+              containerStyle={{}}
+              toastOptions={{
+                duration: 5000,
+              }}
+            />
+            <AllRoutes />
+          </ThemeProvider>
+        </DashboardProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -6,9 +6,9 @@ import {
   IconButton,
 } from "@mui/material";
 import { Task } from "../types/Task";
-import { Add, DeleteOutline } from "@mui/icons-material";
+import { DeleteOutline, Edit } from "@mui/icons-material";
 
-const ItemTask = ({ content }: Task) => {
+const ItemTask = ({ content, checked }: Task) => {
   return (
     <ListItem
       sx={{
@@ -18,7 +18,7 @@ const ItemTask = ({ content }: Task) => {
       secondaryAction={
         <>
           <IconButton>
-            <Add color="success" />
+            <Edit color="info" />
           </IconButton>
           <IconButton
             sx={{
@@ -31,7 +31,7 @@ const ItemTask = ({ content }: Task) => {
       }
     >
       <ListItemIcon>
-        <Checkbox />
+        <Checkbox checked={checked} />
       </ListItemIcon>
       <ListItemText
         sx={{
