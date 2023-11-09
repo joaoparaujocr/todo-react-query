@@ -1,15 +1,13 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
 import accessToken from "../utils/accessToken";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     accessToken.removeToken();
-    navigate("/", { replace: true });
+    location.reload();
   };
 
   return (

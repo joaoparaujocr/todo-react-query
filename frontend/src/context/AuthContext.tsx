@@ -22,11 +22,8 @@ export const AuthContext = createContext({} as AuthContextValues);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserAuth>();
-  const [isFetching, setIsFetching] = useState(false);
-  const token = accessToken.getToken();
+  const [isFetching, setIsFetching] = useState(true);
   const navigate = useNavigate();
-
-  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   const checkTokenAuth = useCallback(async () => {
     try {
@@ -46,12 +43,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [navigate]);
 
   useEffect(() => {
+    const token = accessToken.getToken();
     if (!token) {
       navigate("/login");
+      setIsFetching(false);
       return;
     }
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     checkTokenAuth();
-  }, [checkTokenAuth, navigate, token]);
+  }, [checkTokenAuth, navigate]);
 
   return (
     <AuthContext.Provider value={{ user, isFetching }}>
