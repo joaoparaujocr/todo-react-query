@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const token = accessToken.getToken();
     if (!token) {
-      navigate("/login");
       setIsFetching(false);
       return;
     }
