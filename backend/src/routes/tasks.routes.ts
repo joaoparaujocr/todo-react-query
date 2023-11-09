@@ -8,22 +8,28 @@ import {
   findAllTasksController,
   updateTaskController,
 } from "../controllers/task";
+import { checkedTaskController } from "../controllers/task/checkedTask.controller";
 
 const tasksRoutes = Router();
 
 tasksRoutes.post(
   "",
   validationMiddleware(taskCreateValidate.required()),
-  authenticatedUserMiddleware,
+  authenticatedUserMiddleware(),
   createTaskController
 );
 tasksRoutes.patch(
   "/:id",
-  authenticatedUserMiddleware,
+  authenticatedUserMiddleware(),
   validationMiddleware(taskCreateValidate.partial()),
   updateTaskController
 );
+tasksRoutes.patch(
+  "/:id/checked",
+  authenticatedUserMiddleware(),
+  checkedTaskController
+);
 tasksRoutes.get("", authenticatedUserMiddleware(), findAllTasksController);
-tasksRoutes.delete("/:id", authenticatedUserMiddleware, deleteTaskController);
+tasksRoutes.delete("/:id", authenticatedUserMiddleware(), deleteTaskController);
 
 export default tasksRoutes;

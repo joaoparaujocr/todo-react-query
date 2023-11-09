@@ -22,6 +22,9 @@ export default class Task {
   @UpdateDateColumn()
   updated_at: Date;
 
+  @Column({ default: false })
+  checked: boolean;
+
   @ManyToOne(() => User, (user) => user.tasks)
   user: User;
 }

@@ -17,7 +17,7 @@ export const deleteTaskService = async (
     throw new AppError(404, "Task not found");
   }
 
-  await taskRepository.delete(findTask)
+  await taskRepository.delete({ id: findTask.id });
 
   return;
 };
