@@ -20,7 +20,7 @@ export const checkedTaskService = async (taskId: number, userId: number) => {
     throw new AppError(403, "You do not have permission");
   }
 
-  await taskRepository.update({ ...findTask }, { checked: true });
+  await taskRepository.update({ id: taskId }, { checked: true });
 
   return await taskRepository.findOneBy({ id: taskId });
 };

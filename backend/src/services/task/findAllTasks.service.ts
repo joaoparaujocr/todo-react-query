@@ -13,6 +13,9 @@ export const findAllTasksService = async (userAuth: UserWithoutPassword) => {
         email,
       },
     },
+    order: {
+      id: "DESC",
+    },
   });
 
   return allTasks;
