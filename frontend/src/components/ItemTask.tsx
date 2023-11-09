@@ -16,6 +16,7 @@ const ItemTask = ({ content, checked, id }: Task) => {
 
   const removeTask = async (id: number) => {
     try {
+      toast.remove();
       const fetchDeleteTask = api.delete(`/tasks/${id}`);
       await toast.promise(fetchDeleteTask, {
         error: "Erro ao tentar remover a tarefa",
@@ -29,6 +30,7 @@ const ItemTask = ({ content, checked, id }: Task) => {
   };
 
   const checkedTask = async ({ id, checked }: Pick<Task, "checked" | "id">) => {
+    toast.remove();
     if (checked) {
       toast.error("Essa tarefa já está como concluida");
       return;

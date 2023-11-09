@@ -16,6 +16,7 @@ const AddTask = () => {
 
   const onSubmit: SubmitHandler<InputProps> = async (data) => {
     try {
+      toast.remove();
       const fetchNewTask = api.post<Task>("/tasks", data);
       await toast.promise(fetchNewTask, {
         success: "Nova tarefa adicionada",
