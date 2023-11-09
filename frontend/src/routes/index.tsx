@@ -17,7 +17,7 @@ const AllRoutes = () => {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/login" element={<Register />} />
+        <Route path="/register" element={<Register />} />
       </Route>
     </Routes>
   );
