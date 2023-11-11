@@ -1,10 +1,10 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext} from "react";
 import { Task } from "../types/Task";
 import api from "../api";
+import { useQuery } from "@tanstack/react-query";
 
 type DashboardContextValues = {
   tasks: Task[] | undefined;
-  updateTasks(): Promise<void>;
   isLoadingTasks: boolean;
 };
 
@@ -15,7 +15,7 @@ type DashboardProviderProps = {
 export const DashboardContext = createContext({} as DashboardContextValues);
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
-  const [isLoadingTasks, setIsLoadingTasks] = useState(true);
+  /* const [isLoadingTasks, setIsLoadingTasks] = useState(true);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchAllTasks = useCallback(async () => {
@@ -32,10 +32,16 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   useEffect(() => {
     fetchAllTasks();
   }, [fetchAllTasks]);
+ */
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: () => api.get<Task[]>("/tasks"),
+  });
 
   return (
     <DashboardContext.Provider
-      value={{ isLoadingTasks, tasks, updateTasks: fetchAllTasks }}
+      value={{ isLoadingTasks: isLoading, tasks: data?.data }}
     >
       {children}
     </DashboardContext.Provider>

@@ -9,44 +9,52 @@ import { Task } from "../types/Task";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import api from "../api";
 import toast from "react-hot-toast";
-import { useDashboard } from "../hooks/useDashboard";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 const ItemTask = ({ content, checked, id }: Task) => {
-  const { updateTasks } = useDashboard();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: mutateAsyncRemove } = useMutation<
+    AxiosResponse,
+    Error,
+    number
+  >({
+    mutationFn: (id) => api.delete(`/tasks/${id}`),
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+
+  const { mutateAsync: mutateAsyncChecked } = useMutation<
+    AxiosResponse,
+    Error,
+    { id: number }
+  >({
+    mutationFn: ({ id }) => api.patch(`/tasks/${id}/checked`),
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
 
   const removeTask = async (id: number) => {
-    try {
-      toast.remove();
-      const fetchDeleteTask = api.delete(`/tasks/${id}`);
-      await toast.promise(fetchDeleteTask, {
-        error: "Erro ao tentar remover a tarefa",
-        loading: "Removendo tarefa",
-        success: "Tarefa removida com sucesso",
-      });
-      updateTasks();
-    } catch (error) {
-      console.error(error);
-    }
+    await toast.promise(mutateAsyncRemove(id), {
+      success: "Tarefa removida com sucesso",
+      loading: "Removendo tarefa",
+      error: "Não foi possivel remover a tarefa",
+    });
   };
 
   const checkedTask = async ({ id, checked }: Pick<Task, "checked" | "id">) => {
-    toast.remove();
     if (checked) {
-      toast.error("Essa tarefa já está como concluida");
-      return;
+      return toast.error("Tarefa já concluida");
     }
 
-    try {
-      const fetchCheckedTask = api.patch(`/tasks/${id}/checked`);
-      await toast.promise(fetchCheckedTask, {
-        error: "Erro ao concluir a tarefa",
-        loading: "Adicionando a tarefa como concluida",
-        success: "Tarefa conluida",
-      });
-      updateTasks();
-    } catch {
-      console.log(console.error());
-    }
+    await toast.promise(mutateAsyncChecked({ id }), {
+      error: "Erro ao concluir a tarefa",
+      loading: "Adicionando a tarefa como concluida",
+      success: "Tarefa conluida",
+    });
   };
 
   return (

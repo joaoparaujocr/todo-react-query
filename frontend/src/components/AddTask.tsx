@@ -4,29 +4,30 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import api from "../api";
 import toast from "react-hot-toast";
 import { Task } from "../types/Task";
-import { useDashboard } from "../hooks/useDashboard";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 type InputProps = {
   content: string;
 };
 
 const AddTask = () => {
-  const { updateTasks } = useDashboard();
   const { register, handleSubmit } = useForm<InputProps>();
+  const queryClient = useQueryClient();
+
+  const { mutateAsync } = useMutation<AxiosResponse<Task>, Error, InputProps>({
+    mutationFn: (data) => api.post<Task>("/tasks", data),
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
 
   const onSubmit: SubmitHandler<InputProps> = async (data) => {
-    try {
-      toast.remove();
-      const fetchNewTask = api.post<Task>("/tasks", data);
-      await toast.promise(fetchNewTask, {
-        success: "Nova tarefa adicionada",
-        loading: "Adicionando a tarefa",
-        error: "Erro ao adicionar a nova tarefa",
-      });
-      await updateTasks();
-    } catch (e) {
-      console.error(e);
-    }
+    await toast.promise(mutateAsync(data), {
+      success: "Nova tarefa adicionada",
+      loading: "Adicionando a tarefa",
+      error: "Erro ao adicionar a nova tarefa",
+    });
   };
 
   return (
