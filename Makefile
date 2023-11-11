@@ -3,24 +3,12 @@ ROOT_DIR=$(CURRENT_DIR)
 DOCKER_NAME_BACKEND=backend_todo
 DOCKER_NAME_FRONTEND=frontend_todo
 DOCKER_COMPOSE?=docker-compose
-DOCKER_EXEC_TOOLS_APP=docker exec -it $(DOCKER_NAME) sh
-NODE_INSTALL="pnpm i"
-SERVER_RUN="pnpm dev"
-
 
 .PHONY: build install dev up start first stop restart clear
 
 
 start:
 	$(DOCKER_COMPOSE) up
-
-
-install:
-	$(DOCKER_EXEC_TOOLS_APP) -c $(NODE_INSTALL)
-
-
-dev:
-	$(DOCKER_EXEC_TOOLS_APP) -c $(SERVER_RUN)
 
 
 up:
@@ -42,4 +30,4 @@ create-env:
 
 
 migration:
-	docker exec -it backend_todo /bin/bash -c "pnpm migration:run"
+	docker exec -it $(DOCKER_NAME_FRONTEND) /bin/bash -c "pnpm migration:run"
