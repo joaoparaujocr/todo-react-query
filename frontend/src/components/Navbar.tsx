@@ -1,14 +1,9 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useAuth } from "../hooks/useAuth";
-import accessToken from "../utils/accessToken";
+import { ButtonLogout } from "./ButtonLogout";
 
 const Navbar = () => {
   const { user } = useAuth();
-
-  const handleLogout = () => {
-    accessToken.removeToken();
-    location.reload();
-  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -17,9 +12,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div">
             {user!.email}
           </Typography>
-          <Button onClick={handleLogout} variant="text" color="inherit">
-            Logout
-          </Button>
+          <ButtonLogout />
         </Toolbar>
       </AppBar>
     </Box>
