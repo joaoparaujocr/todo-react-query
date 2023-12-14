@@ -1,10 +1,13 @@
 import { Button } from "@mui/material";
 import accessToken from "../utils/accessToken";
+import { useNavigate } from "react-router-dom";
 
 const ButtonLogout = () => {
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     accessToken.removeToken();
-    location.reload();
+    navigate(0);
   };
 
   return (
